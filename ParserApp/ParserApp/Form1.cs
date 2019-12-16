@@ -24,7 +24,7 @@ namespace ParserApp
         public List<string> tokenValue;
         public List<string> tokenType;
         public int Token = 0 ;
-        
+        public bool ERROR = false ;
 
         public void Match(string s )
         {
@@ -37,12 +37,12 @@ namespace ParserApp
                 }
                 else
                 {
-                    ERROR();
+                    ERROR = true ;
                 }
             }
             else
             {
-                ERROR();
+                ERROR = true ;
             }
         }
 
@@ -55,11 +55,13 @@ namespace ParserApp
             return true;
         }
 
-        public void ERROR()
+
+        public void ERROR_show()
         {
             MessageBox.Show("ERROR!!!");
             return;
         }
+
 
         public void stmt_seq()
         {
@@ -68,6 +70,7 @@ namespace ParserApp
             {
                 if(tokenType[Token] == "SEMICOLON")
                 {
+                    Match("SEMICOLON");
                     stmt();
                 }
             }
@@ -100,12 +103,12 @@ namespace ParserApp
                 }
                 else
                 {
-                    ERROR();
+                    ERROR  = true;
                 }
             }
             else
             {
-                ERROR();
+                ERROR = true;
             }
         }
 
@@ -242,12 +245,12 @@ namespace ParserApp
                 }
                 else
                 {
-                    ERROR();
+                    ERROR = true;
                 }
             }
             else
             {
-                ERROR();
+                ERROR = true ;
             }
         }
 
@@ -338,6 +341,10 @@ namespace ParserApp
             }
 
             stmt_seq();
+            if ( ERROR )
+            {
+                ERROR_show();
+            }
 
         }
 

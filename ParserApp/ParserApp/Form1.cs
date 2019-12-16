@@ -18,10 +18,88 @@ namespace ParserApp
             tokenType = new List<String>();
             tokenValue = new List<String>();
         }
+
         public string input;
         public int input_size;
         public List<string> tokenValue;
         public List<string> tokenType;
+        public int Token = 0 ;
+        
+
+        public void Match(string s )
+        {
+           // MessageBox.Show(s);
+
+            if ( tokenType[Token] == s )
+            {
+                Token++;
+            }
+            else
+            {
+               ERROR();
+            }
+        }
+
+        public void ERROR()
+        {
+            MessageBox.Show("ERROR!!!");
+            return;
+        }
+
+        public void stmt_seq()
+        {
+            stmt();
+
+            if (tokenType[Token] == ";")
+            {
+                stmt();
+            }
+        }
+
+        public void stmt()
+        { 
+
+            if ( tokenType[Token] == "READ" )
+            {
+               // MessageBox.Show("read");
+
+                READ();
+                
+            }
+            else if (tokenType[Token] == "IDENTIFIER")
+            {
+                //  ASSIGN();
+            }
+            else if (tokenType[Token] == "REPEAT")
+            {
+                // _REPEAT();
+            }
+            else if (tokenType[Token] == "IF")
+            {
+                // _IF();
+            }
+            else if (tokenType[Token] == "WRITE")
+            {
+                // _WRITE();
+            }
+            
+            else 
+            {
+            //   ERROR();
+            }
+
+        }
+
+        public void READ()
+        {
+            Match("READ");
+
+            Match("IDENTIFIER");
+
+
+        }
+
+
 
         private void InputText_TextChanged(object sender, EventArgs e)
         {
@@ -37,6 +115,7 @@ namespace ParserApp
 
         private void genBtn_Click(object sender, EventArgs e)
         {
+            
             //list of TokenValue & list of TokenType
             for (int i = 0; i < input_size;)
             {
@@ -102,15 +181,7 @@ namespace ParserApp
                 Output.Text += i +"   " +value+"   " + type + "\r\n";
             }
 
-            //loop on tokenType
-            for (int i=0;i<tokenType.Count;i++)
-            {
-               //is statment
-
-               //is expression 
-                
-            }
-
+            stmt_seq();
 
         }
 
@@ -123,5 +194,7 @@ namespace ParserApp
         {
 
         }
+
+
     }
 }

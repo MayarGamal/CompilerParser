@@ -93,13 +93,33 @@ namespace ParserApp
         public void READ()
         {
             Match("READ");
-
             Match("IDENTIFIER");
+        }
 
+        public void WRITE()
+        {
+            Match("WRITE");
+          //  exp();
 
         }
 
+        public void ASSIGN()
+        {
+            Match("IDENTIFIER");
+            Match("ASSIGN");
+           // exp();
 
+        }
+
+        public void REPEAT()
+        {
+
+           Match("REPEAT");
+           stmt_seq();
+           Match("UNTIL");
+           // exp();
+
+        }
 
         private void InputText_TextChanged(object sender, EventArgs e)
         {

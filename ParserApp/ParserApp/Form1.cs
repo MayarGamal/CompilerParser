@@ -46,21 +46,22 @@ namespace ParserApp
                 }
                 else
                 {
-                    while ((input[i] != ',') && (input[i] != ' ') )
+                    while ((input[i] != ',') && (input[i] != ' '))
                     {
 
                         char ip = input[i];
                         string input_s = ip.ToString();
                         int length = temp.Length;
                         temp = temp.Insert(length, input_s);
-                        tokenValue.Add(temp);
+                        
                         i++;
                     }
+                    tokenValue.Add(temp);
                     while (input[i] == ' ')
                     {
                         i++;
                     }
-                    if(input[i] == ',')
+                    if (input[i] == ',')
                     {
                         i++;
                         temp = string.Empty;
@@ -68,25 +69,31 @@ namespace ParserApp
                         {
                             i++;
                         }
-                        if (i < input_size-1)
+
+                        while (i < input_size)
                         {
-                            while (input[i] != '\r' && input[i+1] != '\n')
+                            if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
                             {
-                                char ip = input[i];
-                                string input_s = ip.ToString();
-                                int length = temp.Length;
-                                temp = temp.Insert(length, input_s);
-                                tokenType.Add(temp);
-                                i++;
+                                i += 2;
+                                break;
                             }
-                            i += 2;
+                            char ip = input[i];
+                            string input_s = ip.ToString();
+                            int length = temp.Length;
+                            temp = temp.Insert(length, input_s);
+                            
+                            i++;
                         }
+                        tokenType.Add(temp);
+                        temp = string.Empty;
 
                     }
 
 
                 }
+
             }
+            
             for (int i = 0; i < tokenType.Count; i++)
             {
                 string type = tokenType[i];

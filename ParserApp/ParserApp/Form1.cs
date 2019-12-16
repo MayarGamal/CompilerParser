@@ -48,7 +48,7 @@ namespace ParserApp
         public void stmt_seq()
         {
             stmt();
-            if ( ( tokenType.Count-1 > Token) &&( tokenType[Token] == ";") )
+            if ( (( tokenType.Count() -1) > Token) &&( tokenType[Token] == ";") )
             {
                 stmt();
             }
@@ -131,17 +131,89 @@ namespace ParserApp
 
         public void exp()
         {
-            // simple_exp();
-            if (tokenType.Count - 1 > Token)
+            simple_exp();
+            if (tokenType.Count() - 1 > Token)
             {
-                if (tokenType[Token] == "<" || tokenType[Token] == "=")//comparison_op
+                //comp_op
+                if ( tokenType[Token] == "EQUAL" )
                 {
-                    //comparison_op();
-                    // simple_exp();
+                    Match("EQUAL");
+                    simple_exp();
+                }
+                else if ( tokenType[Token] == "LESSTHAN")
+                {
+                    Match("LESSTHAN");
+                    simple_exp();
                 }
             }
         }
+       
 
+        void simple_exp()
+        {
+            term();
+
+            //add_op
+
+            if (tokenType.Count() - 1 > Token)
+            {
+                if (tokenType[Token] == "PLUS")
+                {
+                    Match("PLUS");
+                     term();
+                }
+                else if ( tokenType[Token] == "MINUS")
+                {
+                    Match("MINUS");
+                    term();
+                }
+            }
+
+        }
+
+        void term()
+        {
+            factor();
+
+            //mul_op
+            if (tokenType.Count() - 1 > Token)
+            {
+                if (tokenType[Token] == "MULT")
+                {
+                    Match("MULT");
+                    factor();
+                }
+                else if ( tokenType[Token] == "DIV")
+                {
+                    Match("DIV");
+                    factor();
+                }
+            }
+
+        }
+
+        void factor()
+        {
+            if (tokenType[Token] == "OPENBRACKET")
+            {
+                Match("OPENBRACKET");
+                exp();
+                Match("CLOSEDBRACKET");
+            }
+            else if (tokenType[Token] == "NUMBER")
+            {
+                Match("NUMBER");
+            }
+            else if (tokenType[Token] == "IDENTIFIER")
+            {
+                Match("IDENTIFIER");
+            }
+            else
+            {
+                ERROR();
+            }
+
+        }
 
 
 

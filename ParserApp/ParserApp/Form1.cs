@@ -29,8 +29,7 @@ namespace ParserApp
         public void Match(string s )
         {
            // MessageBox.Show(s);
-
-            if ( tokenType[Token] == s )
+            if ( (tokenType.Count - 1)  > Token &&  tokenType[Token] == s )
             {
                 Token++;
             }
@@ -49,8 +48,7 @@ namespace ParserApp
         public void stmt_seq()
         {
             stmt();
-
-            if ((tokenValue.Count-1 > Token) &&(tokenType[Token] == ";"))
+            if ( ( tokenType.Count-1 > Token) &&( tokenType[Token] == ";") )
             {
                 stmt();
             }
@@ -58,34 +56,30 @@ namespace ParserApp
 
         public void stmt()
         { 
-
             if ( tokenType[Token] == "READ" )
             {
-               // MessageBox.Show("read");
-
                 READ();
-                
             }
             else if (tokenType[Token] == "IDENTIFIER")
             {
-                //  ASSIGN();
+                 ASSIGN();
             }
             else if (tokenType[Token] == "REPEAT")
             {
-                // _REPEAT();
+                REPEAT();
             }
             else if (tokenType[Token] == "IF")
             {
-                // _IF();
+                IF();
             }
             else if (tokenType[Token] == "WRITE")
             {
-                // _WRITE();
+                WRITE();
             }
             
             else 
             {
-            //   ERROR();
+                ERROR();
             }
 
         }
@@ -99,7 +93,7 @@ namespace ParserApp
         public void WRITE()
         {
             Match("WRITE");
-          //  exp();
+            exp();
 
         }
 
@@ -107,7 +101,7 @@ namespace ParserApp
         {
             Match("IDENTIFIER");
             Match("ASSIGN");
-           // exp();
+            exp();
 
         }
 
@@ -117,9 +111,39 @@ namespace ParserApp
            Match("REPEAT");
            stmt_seq();
            Match("UNTIL");
-           // exp();
+           exp();
 
         }
+
+        public void IF()
+        {
+            Match("IF");
+            exp();
+            Match("THEN");
+            stmt_seq();
+
+            if (tokenType[Token] == "ELSE")
+            {
+                stmt_seq();
+            }
+            Match("END");
+        }
+
+        public void exp()
+        {
+            // simple_exp();
+            if (tokenType.Count - 1 > Token)
+            {
+                if (tokenType[Token] == "<" || tokenType[Token] == "=")//comparison_op
+                {
+                    //comparison_op();
+                    // simple_exp();
+                }
+            }
+        }
+
+
+
 
         private void InputText_TextChanged(object sender, EventArgs e)
         {

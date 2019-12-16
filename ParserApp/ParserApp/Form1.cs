@@ -50,7 +50,7 @@ namespace ParserApp
         {
             stmt();
 
-            if (tokenType[Token] == ";")
+            if ((tokenValue.Count-1 > Token) &&(tokenType[Token] == ";"))
             {
                 stmt();
             }
@@ -125,7 +125,7 @@ namespace ParserApp
                 }
                 else
                 {
-                    while ((input[i] != ',') && (input[i] != ' '))
+                    while ((i < input_size)&&(input[i] != ',') && (input[i] != ' '))
                     {
 
                         char ip = input[i];
@@ -136,15 +136,15 @@ namespace ParserApp
                         i++;
                     }
                     tokenValue.Add(temp);
-                    while (input[i] == ' ')
+                    while ((i < input_size)&&input[i] == ' ')
                     {
                         i++;
                     }
-                    if (input[i] == ',')
+                    if ((i < input_size)&&(input[i] == ','))
                     {
                         i++;
                         temp = string.Empty;
-                        while (input[i] == ' ')
+                        while ((i < input_size)&&(input[i] == ' '))
                         {
                             i++;
                         }
@@ -162,6 +162,10 @@ namespace ParserApp
                             temp = temp.Insert(length, input_s);
                             
                             i++;
+                            while ((i < input_size) && (input[i] == ' '))
+                            {
+                                i++;
+                            }
                         }
                         tokenType.Add(temp);
                         temp = string.Empty;

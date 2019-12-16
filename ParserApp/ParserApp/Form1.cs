@@ -28,15 +28,31 @@ namespace ParserApp
 
         public void Match(string s )
         {
-           // MessageBox.Show(s);
-            if ( (tokenType.Count - 1)  > Token &&  tokenType[Token] == s )
+           MessageBox.Show(s);
+            if (is_valid())
             {
-                Token++;
+                if (tokenType[Token] == s)
+                {
+                    Token++;
+                }
+                else
+                {
+                    ERROR();
+                }
             }
             else
             {
-               ERROR();
+                ERROR();
             }
+        }
+
+        public bool is_valid()
+        {
+            if ( tokenType.Count() == Token)
+            {
+                return false;
+            }
+            return true;
         }
 
         public void ERROR()
@@ -48,40 +64,49 @@ namespace ParserApp
         public void stmt_seq()
         {
             stmt();
-            if ( (( tokenType.Count() -1) > Token) &&( tokenType[Token] == ";") )
+            if ( is_valid() )
             {
-                stmt();
+                if(tokenType[Token] == "SEMICOLON")
+                {
+                    stmt();
+                }
             }
+               
         }
 
         public void stmt()
-        { 
-            if ( tokenType[Token] == "READ" )
+        {
+            if (is_valid())
             {
-                READ();
+                if (tokenType[Token] == "READ")
+                {
+                    READ();
+                }
+                else if (tokenType[Token] == "IDENTIFIER")
+                {
+                    ASSIGN();
+                }
+                else if (tokenType[Token] == "REPEAT")
+                {
+                    REPEAT();
+                }
+                else if (tokenType[Token] == "IF")
+                {
+                    IF();
+                }
+                else if (tokenType[Token] == "WRITE")
+                {
+                    WRITE();
+                }
+                else
+                {
+                    ERROR();
+                }
             }
-            else if (tokenType[Token] == "IDENTIFIER")
-            {
-                 ASSIGN();
-            }
-            else if (tokenType[Token] == "REPEAT")
-            {
-                REPEAT();
-            }
-            else if (tokenType[Token] == "IF")
-            {
-                IF();
-            }
-            else if (tokenType[Token] == "WRITE")
-            {
-                WRITE();
-            }
-            
-            else 
+            else
             {
                 ERROR();
             }
-
         }
 
         public void READ()
@@ -122,9 +147,13 @@ namespace ParserApp
             Match("THEN");
             stmt_seq();
 
-            if (tokenType[Token] == "ELSE")
+            if (is_valid())
             {
-                stmt_seq();
+                if (tokenType[Token] == "ELSE")
+                {
+                    Match("ELSE");
+                    stmt_seq();
+                }
             }
             Match("END");
         }
@@ -132,7 +161,8 @@ namespace ParserApp
         public void exp()
         {
             simple_exp();
-            if (tokenType.Count() - 1 > Token)
+
+            if (is_valid())
             {
                 //comp_op
                 if ( tokenType[Token] == "EQUAL" )
@@ -155,7 +185,7 @@ namespace ParserApp
 
             //add_op
 
-            if (tokenType.Count() - 1 > Token)
+            if (is_valid())
             {
                 if (tokenType[Token] == "PLUS")
                 {
@@ -176,7 +206,7 @@ namespace ParserApp
             factor();
 
             //mul_op
-            if (tokenType.Count() - 1 > Token)
+            if (is_valid())
             {
                 if (tokenType[Token] == "MULT")
                 {
@@ -194,25 +224,31 @@ namespace ParserApp
 
         void factor()
         {
-            if (tokenType[Token] == "OPENBRACKET")
+            if (is_valid())
             {
-                Match("OPENBRACKET");
-                exp();
-                Match("CLOSEDBRACKET");
-            }
-            else if (tokenType[Token] == "NUMBER")
-            {
-                Match("NUMBER");
-            }
-            else if (tokenType[Token] == "IDENTIFIER")
-            {
-                Match("IDENTIFIER");
+                if (tokenType[Token] == "OPENBRACKET")
+                {
+                    Match("OPENBRACKET");
+                    exp();
+                    Match("CLOSEDBRACKET");
+                }
+                else if (tokenType[Token] == "NUMBER")
+                {
+                    Match("NUMBER");
+                }
+                else if (tokenType[Token] == "IDENTIFIER")
+                {
+                    Match("IDENTIFIER");
+                }
+                else
+                {
+                    ERROR();
+                }
             }
             else
             {
                 ERROR();
             }
-
         }
 
 

@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.InputText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.genBtn = new System.Windows.Forms.Button();
+            this.Output = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // InputText
@@ -62,16 +65,32 @@
             this.genBtn.UseVisualStyleBackColor = true;
             this.genBtn.Click += new System.EventHandler(this.genBtn_Click);
             // 
+            // Output
+            // 
+            this.Output.Location = new System.Drawing.Point(427, 25);
+            this.Output.Multiline = true;
+            this.Output.Name = "Output";
+            this.Output.Size = new System.Drawing.Size(213, 259);
+            this.Output.TabIndex = 3;
+            this.Output.TextChanged += new System.EventHandler(this.Output_TextChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 378);
+            this.Controls.Add(this.Output);
             this.Controls.Add(this.genBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.InputText);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,6 +101,8 @@
         private System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button genBtn;
+        private System.Windows.Forms.TextBox Output;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

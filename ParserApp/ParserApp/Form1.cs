@@ -15,6 +15,8 @@ namespace ParserApp
         public Form1()
         {
             InitializeComponent();
+            tokenType = new List<String>();
+            tokenValue = new List<String>();
         }
         public string input;
         public int input_size;
@@ -38,13 +40,65 @@ namespace ParserApp
             //list of TokenValue & list of TokenType
             for (int i = 0; i < input_size;)
             {
-                
+                if (input[i] == ' ')
+                {
+                    i++;
+                }
+                else
+                {
+                    while ((input[i] != ',') && (input[i] != ' ') )
+                    {
+
+                        char ip = input[i];
+                        string input_s = ip.ToString();
+                        int length = temp.Length;
+                        temp = temp.Insert(length, input_s);
+                        tokenValue.Add(temp);
+                        i++;
+                    }
+                    while (input[i] == ' ')
+                    {
+                        i++;
+                    }
+                    if(input[i] == ',')
+                    {
+                        i++;
+                        temp = string.Empty;
+                        while (input[i] == ' ')
+                        {
+                            i++;
+                        }
+                        if (i < input_size-1)
+                        {
+                            while (input[i] != '\r' && input[i+1] != '\n')
+                            {
+                                char ip = input[i];
+                                string input_s = ip.ToString();
+                                int length = temp.Length;
+                                temp = temp.Insert(length, input_s);
+                                tokenType.Add(temp);
+                                i++;
+                            }
+                            i += 2;
+                        }
+
+                    }
+
+
+                }
+            }
+            for (int i = 0; i < tokenType.Count; i++)
+            {
+                string type = tokenType[i];
+                string value = tokenValue[i];
+
+                Output.Text += i +"   " +value+"   " + type + "\r\n";
             }
 
             //loop on tokenType
             for (int i=0;i<tokenType.Count;i++)
             {
-                //is statment
+               //is statment
 
                //is expression 
                 
@@ -53,11 +107,14 @@ namespace ParserApp
 
         }
 
-       
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
+        }
 
+        private void Output_TextChanged(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }

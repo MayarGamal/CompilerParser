@@ -270,91 +270,104 @@ namespace ParserApp
 
         private void genBtn_Click(object sender, EventArgs e)
         {
-            genBtn.Enabled = false; 
-
-            //list of TokenValue & list of TokenType
-            for (int i = 0; i < input_size;)
+            try
             {
-                if (input[i] == ' ')
-                {
-                    i++;
-                }
-                else
-                {
-                    while ((i < input_size)&&(input[i] != ',') && (input[i] != ' '))
-                    {
+                //genBtn.Enabled = false; 
+                tokenType.Clear();
+                tokenValue.Clear();
+                Output.Text = String.Empty;
+                Token = 0;
 
-                        char ip = input[i];
-                        string input_s = ip.ToString();
-                        int length = temp.Length;
-                        temp = temp.Insert(length, input_s);
-                        
-                        i++;
-                    }
-                    tokenValue.Add(temp);
-                    while ((i < input_size)&&input[i] == ' ')
+                //list of TokenValue & list of TokenType
+                for (int i = 0; i < input_size;)
+                {
+                    if (input[i] == ' ')
                     {
                         i++;
                     }
-                    if ((i < input_size)&&(input[i] == ','))
+                    else
                     {
-                        i++;
-                        temp = string.Empty;
-                        while ((i < input_size)&&(input[i] == ' '))
+                        while ((i < input_size) && (input[i] != ',') && (input[i] != ' '))
                         {
-                            i++;
-                        }
 
-                        while (i < input_size)
-                        {
-                            if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
-                            {
-                                i += 2;
-                                break;
-                            }
                             char ip = input[i];
                             string input_s = ip.ToString();
                             int length = temp.Length;
                             temp = temp.Insert(length, input_s);
-                            
+
                             i++;
+                        }
+                        tokenValue.Add(temp);
+                        while ((i < input_size) && input[i] == ' ')
+                        {
+                            i++;
+                        }
+                        if ((i < input_size) && (input[i] == ','))
+                        {
+                            i++;
+                            temp = string.Empty;
                             while ((i < input_size) && (input[i] == ' '))
                             {
                                 i++;
                             }
+
+                            while (i < input_size)
+                            {
+                                if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
+                                {
+                                    i += 2;
+                                    break;
+                                }
+                                char ip = input[i];
+                                string input_s = ip.ToString();
+                                int length = temp.Length;
+                                temp = temp.Insert(length, input_s);
+
+                                i++;
+                                while ((i < input_size) && (input[i] == ' '))
+                                {
+                                    i++;
+                                }
+                            }
+                            tokenType.Add(temp);
+                            temp = string.Empty;
+
                         }
-                        tokenType.Add(temp);
-                        temp = string.Empty;
+
 
                     }
 
-
                 }
 
-            }
-            
-            for (int i = 0; i < tokenType.Count; i++)
-            {
-                string type = tokenType[i];
-                string value = tokenValue[i];
+                for (int i = 0; i < tokenType.Count; i++)
+                {
+                    string type = tokenType[i];
+                    string value = tokenValue[i];
 
-                Output.Text += i +"   " +value+"   " + type + "\r\n";
-            }
+                    Output.Text += i + "   " + value + "   " + type + "\r\n";
+                }
 
-            if (tokenType.Count() == 0)
-            {
-                ERROR = true;
-            }
-            else
-            {
-                stmt_seq();
-            }
+                if (tokenType.Count() == 0)
+                {
+                    ERROR = true;
+                }
+                else
+                {
+                    stmt_seq();
+                }
 
-            if ( ERROR )
+                if (ERROR)
+                {
+                    Output.Text = String.Empty;
+                    ERROR_show();
+                }
+            }
+            catch (Exception)
             {
+                Output.Text = String.Empty;
                 ERROR_show();
-            }
 
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

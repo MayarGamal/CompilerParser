@@ -28,7 +28,7 @@ namespace ParserApp
 
         public void Match(string s )
         {
-           MessageBox.Show(s);
+          // MessageBox.Show(s);
             if (is_valid())
             {
                 if (tokenType[Token] == s)
@@ -59,7 +59,7 @@ namespace ParserApp
         public void ERROR_show()
         {
             MessageBox.Show("ERROR!!!");
-            return;
+            ERROR = false;
         }
 
 
@@ -71,7 +71,7 @@ namespace ParserApp
                 if(tokenType[Token] == "SEMICOLON")
                 {
                     Match("SEMICOLON");
-                    stmt();
+                    stmt_seq();
                 }
             }
                
@@ -270,7 +270,8 @@ namespace ParserApp
 
         private void genBtn_Click(object sender, EventArgs e)
         {
-            
+            genBtn.Enabled = false; 
+
             //list of TokenValue & list of TokenType
             for (int i = 0; i < input_size;)
             {
@@ -340,7 +341,15 @@ namespace ParserApp
                 Output.Text += i +"   " +value+"   " + type + "\r\n";
             }
 
-            stmt_seq();
+            if (tokenType.Count() == 0)
+            {
+                ERROR = true;
+            }
+            else
+            {
+                stmt_seq();
+            }
+
             if ( ERROR )
             {
                 ERROR_show();
@@ -358,6 +367,18 @@ namespace ParserApp
 
         }
 
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Output.Text = String.Empty;
+            InputText.Text = String.Empty;
+            tokenType.Clear();
+            tokenValue.Clear();
+            Token = 0;
+           // ERROR = false;
+            input_size = 0;
+            input = "";
+            genBtn.Enabled = true;
 
+        }
     }
 }

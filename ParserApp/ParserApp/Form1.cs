@@ -372,7 +372,7 @@ namespace ParserApp
                 {
                     stmt_seq();
                 }
-                Draw_tree();
+               Draw_tree();
 
                 if (ERROR)
                 {
@@ -382,7 +382,7 @@ namespace ParserApp
                     ERROR_show();
                 }
 
-                //Draw_tree();
+            
 
             }
             catch (Exception)
@@ -531,7 +531,7 @@ namespace ParserApp
             while ( ! (tokenType.Count() == t) )
             {
                 if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
-                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
                 { 
                     //comp_op
                     if (tokenType[t] == "EQUAL")
@@ -578,7 +578,7 @@ namespace ParserApp
             while ( !(tokenType.Count() == t) )
             {
                 if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
-                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
                 {
                     //add_op
                     if (tokenType[t] == "PLUS")
@@ -623,7 +623,7 @@ namespace ParserApp
             while (!(tokenType.Count() == t))
             {
                if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
-                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
                 {
                     //mul_op
                     if (tokenType[t] == "MULT")
@@ -664,9 +664,9 @@ namespace ParserApp
             {
                 if ( tokenType[Token] == "OPENBRACKET")
                 {
-                    Match("OPENBRACKET");
-                    exp();
-                    Match("CLOSEDBRACKET");
+                    Token++;// (
+                    exp_Draw( level);
+                    Token++;// )
                 }
                 else if (tokenType[Token] == "NUMBER")
                 {

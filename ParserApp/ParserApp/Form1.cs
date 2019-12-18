@@ -400,6 +400,7 @@ namespace ParserApp
 
         public void stmt_seq_draw(int level)
         {
+            int x_st = x_axis;
             stmt_draw(level);
             if (is_valid())
             {
@@ -407,10 +408,12 @@ namespace ParserApp
                 {
                     Token++;
                     x_axis = x_axis + 100;
+                    Graphics l = this.CreateGraphics();
+                    Pen blackPen = new Pen(Color.Black, 3);
+                    l.DrawLine(blackPen, x_st + 60, y_axis + 25 + (level * 70), x_axis , y_axis + 25 + (level * 70) );
                     stmt_seq_draw(level);
                 }
             }
-
         }
 
         public void stmt_draw( int level )
@@ -441,7 +444,7 @@ namespace ParserApp
            
         }
 
-
+        
         public void READ_Draw(int level)
         {
             Graphics l = this.CreateGraphics();
@@ -457,9 +460,8 @@ namespace ParserApp
         {
             Draw_REC(level, "write");
             Token++;
-
+            DrawLine(level, x_axis);
             exp_Draw(level+1 );
-
         }
 
         public void ASSIGN_Draw(int level)
@@ -469,33 +471,42 @@ namespace ParserApp
 
             Draw_REC( level, "ASSIGN");
             l.DrawString("(" + tokenValue[Token] + ")", new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 15, y_axis + 20 + (level * 70));
-            Token++;
-            Token++;
+            DrawLine(level, x_axis);
 
+            Token++;
+            Token++;
+            
             exp_Draw(level+1);
-
+            
         }
 
         public void REPEAT_Draw(int level)
         {
+            int x_repeat = x_axis;
 
             Draw_REC(level, "repeat");
+            DrawLine(level, x_repeat);
             Token++;
             stmt_seq_draw(level + 1);
 
             Token++; // until
             x_axis = x_axis + 100;
+            DrawLine(level, x_repeat);
             exp_Draw(level+1);
         }
 
         public void IF_Draw(int level)
         {
+            int x_if = x_axis;
             Draw_REC(level, "if");
+            DrawLine(level, x_if);
+
             Token++;
             exp_Draw( level +1 );
 
             Token++;//THEN 
             x_axis = x_axis + 100;
+            DrawLine(level, x_if);
             stmt_seq_draw(level + 1);
 
             if (is_valid())
@@ -504,6 +515,7 @@ namespace ParserApp
                 {
                     Token++;
                     x_axis = x_axis + 100;
+                    DrawLine(level, x_if);
                     stmt_seq_draw(level + 1);
                 }
             }
@@ -512,6 +524,7 @@ namespace ParserApp
 
         public void exp_Draw(int level )
         {
+            int x_exp = x_axis;
             int t = Token;
             bool i = false ;
 
@@ -525,7 +538,6 @@ namespace ParserApp
                     {
                         i = true;
                         Draw_circle(level, "Op", "=");
-
                     }
                     else if (tokenType[t] == "LESSTHAN")
                     {
@@ -545,10 +557,13 @@ namespace ParserApp
             }
             else
             {
+                DrawLine(level, x_exp);
                 simple_exp_Draw(level + 1);
                 Token++;
                 x_axis = x_axis + 100;
+                DrawLine(level, x_exp);
                 simple_exp_Draw(level + 1);
+                
             }
 
         }
@@ -556,6 +571,7 @@ namespace ParserApp
 
         void simple_exp_Draw(int level)
         {
+            int x_s = x_axis;
             int t = Token;
             bool i = false;
 
@@ -589,16 +605,18 @@ namespace ParserApp
             }
             else
             {
+                DrawLine(level, x_s);
                 term_Draw(level+1);
                 Token++;
                 x_axis = x_axis + 100;
+                DrawLine(level, x_s);
                 term_Draw(level + 1);
             }
         }
 
         void term_Draw(int level)
         {
-
+            int x_term = x_axis;
             int t = Token;
             bool i = false;
 
@@ -632,8 +650,10 @@ namespace ParserApp
             else
             {
                 factor_Draw(level + 1);
+                DrawLine(level, x_term);
                 Token++;
                 x_axis = x_axis + 100;
+                DrawLine(level, x_term);
                 factor_Draw(level + 1);
             }
         }
@@ -668,9 +688,9 @@ namespace ParserApp
             Pen c = new Pen(Color.Black, 2);
             Pen p = new Pen(Color.Blue, 2);
 
-            l.DrawEllipse(c, x_axis, y_axis + (level*70) , 50, 50);
+            l.DrawEllipse(c, x_axis, y_axis + (level*70) , 60, 50);
             l.DrawString( s , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 10 + (level * 70));
-            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 25 + (level * 70));
+            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 20 , y_axis + 20 + (level * 70));
             
         }
 
@@ -678,15 +698,15 @@ namespace ParserApp
         {
             Graphics l = this.CreateGraphics();
             Pen c = new Pen(Color.Black, 2);
-            l.DrawRectangle(c, x_axis, y_axis + (level * 70), 60 , 40);
+            l.DrawRectangle(c, x_axis, y_axis + (level * 70), 60 , 50);
             l.DrawString(s, new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15, y_axis + 5 + (level * 70) );
         }
-        public void DrawLine(int level)
+        public void DrawLine(int level , int x)
         {
 
             Graphics l = this.CreateGraphics();
             Pen blackPen = new Pen(Color.Black, 3);
-           // l.DrawLine(blackPen, x1, y1, x2, y2);
+            l.DrawLine(blackPen, x + 30 , y_axis+50+ (level*70) , x_axis + 30 , y_axis + 50 + (level * 70) + 20 );
         }
 
 

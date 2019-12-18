@@ -17,6 +17,7 @@ namespace ParserApp
             InitializeComponent();
             tokenType = new List<String>();
             tokenValue = new List<String>();
+            Graphics l = this.CreateGraphics();
             this.Invalidate();
         }
 
@@ -62,7 +63,10 @@ namespace ParserApp
 
         public void ERROR_show()
         {
+            this.CreateGraphics().Clear(Form1.ActiveForm.BackColor);
+
             MessageBox.Show("ERROR!!!");
+
             ERROR = false;
         }
 
@@ -272,10 +276,15 @@ namespace ParserApp
 
         private void genBtn_Click(object sender, EventArgs e)
         {
+            //this.CreateGraphics().Clear(Form1.ActiveForm.BackColor);
             try
             {
-                //genBtn.Enabled = false; 
-                tokenType.Clear();
+                this.CreateGraphics().Clear(ActiveForm.BackColor);
+                x_axis = 300;
+                y_axis = 20;
+
+        //genBtn.Enabled = false; 
+        tokenType.Clear();
                 tokenValue.Clear();
                 Output.Text = String.Empty;
                 Token = 0;
@@ -315,7 +324,13 @@ namespace ParserApp
 
                             while (i < input_size)
                             {
-                                if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
+                                if (i < input_size + 3 && (input[i] == '\n') && (input[i+1] == '\r') && (input[i+2] == '\n'))
+                                {
+                                    i +=3;
+                                    break;
+                                  
+                                }
+                               else if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
                                 {
                                     i += 2;
                                     break;
@@ -357,19 +372,24 @@ namespace ParserApp
                 {
                     stmt_seq();
                 }
+                Draw_tree();
 
                 if (ERROR)
                 {
                     Output.Text = String.Empty;
+                    this.CreateGraphics().Clear(ActiveForm.BackColor);
+
                     ERROR_show();
                 }
 
-                Draw_tree();
+                //Draw_tree();
 
             }
             catch (Exception)
             {
                 Output.Text = String.Empty;
+                this.CreateGraphics().Clear(ActiveForm.BackColor);
+
                 ERROR_show();
 
             }
@@ -661,6 +681,13 @@ namespace ParserApp
             l.DrawRectangle(c, x_axis, y_axis + (level * 70), 60 , 40);
             l.DrawString(s, new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15, y_axis + 5 + (level * 70) );
         }
+        public void DrawLine(int level)
+        {
+
+            Graphics l = this.CreateGraphics();
+            Pen blackPen = new Pen(Color.Black, 3);
+           // l.DrawLine(blackPen, x1, y1, x2, y2);
+        }
 
 
         public void Draw_tree()
@@ -680,9 +707,17 @@ namespace ParserApp
         {
 
         }
+        private void ClearColor(PaintEventArgs e)
+        {
+            // Clear screen with teal background.
+            e.Graphics.Clear(Color.Teal);
+        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            //ClearColor(0);
+            // e.Graphics.Clear(Color.Coral);
+            this.CreateGraphics().Clear(ActiveForm.BackColor);
             Output.Text = String.Empty;
             InputText.Text = String.Empty;
             tokenType.Clear();

@@ -17,6 +17,7 @@ namespace ParserApp
             InitializeComponent();
             tokenType = new List<String>();
             tokenValue = new List<String>();
+            this.Invalidate();
         }
 
         public string input;
@@ -25,6 +26,9 @@ namespace ParserApp
         public List<string> tokenType;
         public int Token = 0 ;
         public bool ERROR = false ;
+        public int x_axis = 300;
+        public int y_axis = 20;
+        public int LEVEL = 0;
 
         public void Match(string s )
         {
@@ -139,8 +143,7 @@ namespace ParserApp
            Match("REPEAT");
            stmt_seq();
            Match("UNTIL");
-           exp();
-
+            exp();
         }
 
         public void IF()
@@ -165,7 +168,7 @@ namespace ParserApp
         {
             simple_exp();
 
-            if (is_valid())
+            if ( is_valid() )
             {
                 //comp_op
                 if ( tokenType[Token] == "EQUAL" )
@@ -181,7 +184,7 @@ namespace ParserApp
             }
         }
        
-
+        
         void simple_exp()
         {
             term();
@@ -207,7 +210,6 @@ namespace ParserApp
         void term()
         {
             factor();
-
             //mul_op
             if (is_valid())
             {
@@ -253,7 +255,7 @@ namespace ParserApp
                 ERROR = true ;
             }
         }
-
+        
 
 
         private void InputText_TextChanged(object sender, EventArgs e)
@@ -361,6 +363,9 @@ namespace ParserApp
                     Output.Text = String.Empty;
                     ERROR_show();
                 }
+
+                Draw_tree();
+
             }
             catch (Exception)
             {
@@ -368,11 +373,307 @@ namespace ParserApp
                 ERROR_show();
 
             }
+
+
         }
+
+
+        public void stmt_seq_draw(int level)
+        {
+            stmt_draw(level);
+            if (is_valid())
+            {
+                if (tokenType[Token] == "SEMICOLON")
+                {
+                    Token++;
+                    x_axis = x_axis + 100;
+                    stmt_seq_draw(level);
+                }
+            }
+
+        }
+
+        public void stmt_draw( int level )
+        {
+            if (is_valid())
+            {
+                if ( tokenType[Token] == "READ")
+                {
+                    READ_Draw(level );
+                }
+                else if (tokenType[Token] == "IDENTIFIER")
+                {
+                    ASSIGN_Draw(level);
+                }
+                else if (tokenType[Token] == "REPEAT")
+                {
+                    REPEAT_Draw(level);
+                }
+                else if (tokenType[Token] == "IF")
+                {
+                    IF_Draw(level);
+                }
+                else if (tokenType[Token] == "WRITE")
+                {
+                    WRITE_Draw(level);
+                }
+            }
+           
+        }
+
+
+        public void READ_Draw(int level)
+        {
+            Graphics l = this.CreateGraphics();
+            Pen c = new Pen(Color.Black, 2);
+
+            Draw_REC(level, "read");
+            Token++;
+            l.DrawString("(" + tokenValue[Token] + ")" , new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 15, y_axis + 20 + (level*70)) ;
+            Token++;
+        }
+
+        public void WRITE_Draw(int level)
+        {
+            Draw_REC(level, "write");
+            Token++;
+
+            exp_Draw(level+1 );
+
+        }
+
+        public void ASSIGN_Draw(int level)
+        {
+            Graphics l = this.CreateGraphics();
+            Pen c = new Pen(Color.Black, 2);
+
+            Draw_REC( level, "ASSIGN");
+            l.DrawString("(" + tokenValue[Token] + ")", new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 15, y_axis + 20 + (level * 70));
+            Token++;
+            Token++;
+
+            exp_Draw(level+1);
+
+        }
+
+        public void REPEAT_Draw(int level)
+        {
+
+            Draw_REC(level, "repeat");
+            Token++;
+            stmt_seq_draw(level + 1);
+
+            Token++; // until
+            x_axis = x_axis + 100;
+            exp_Draw(level+1);
+        }
+
+        public void IF_Draw(int level)
+        {
+            Draw_REC(level, "if");
+            Token++;
+            exp_Draw( level +1 );
+
+            Token++;//THEN 
+            x_axis = x_axis + 100;
+            stmt_seq_draw(level + 1);
+
+            if (is_valid())
+            {
+                if (tokenType[Token] == "ELSE")
+                {
+                    Token++;
+                    x_axis = x_axis + 100;
+                    stmt_seq_draw(level + 1);
+                }
+            }
+            Token++;//end
+        }
+
+        public void exp_Draw(int level )
+        {
+            int t = Token;
+            bool i = false ;
+
+            while ( ! (tokenType.Count() == t) )
+            {
+                if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                { 
+                    //comp_op
+                    if (tokenType[t] == "EQUAL")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "=");
+
+                    }
+                    else if (tokenType[t] == "LESSTHAN")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "<");
+                    }
+                     t++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if ( ! i )
+            {
+                simple_exp_Draw(level);
+            }
+            else
+            {
+                simple_exp_Draw(level + 1);
+                Token++;
+                x_axis = x_axis + 100;
+                simple_exp_Draw(level + 1);
+            }
+
+        }
+        
+
+        void simple_exp_Draw(int level)
+        {
+            int t = Token;
+            bool i = false;
+
+            while ( !(tokenType.Count() == t) )
+            {
+                if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                {
+                    //add_op
+                    if (tokenType[t] == "PLUS")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "+");
+                    }
+                    else if (tokenType[t] == "MINUS")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "-");
+                    }
+                    t++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (!i)
+            {
+                term_Draw(level);
+            }
+            else
+            {
+                term_Draw(level+1);
+                Token++;
+                x_axis = x_axis + 100;
+                term_Draw(level + 1);
+            }
+        }
+
+        void term_Draw(int level)
+        {
+
+            int t = Token;
+            bool i = false;
+
+            while (!(tokenType.Count() == t))
+            {
+               if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL"))
+                {
+                    //mul_op
+                    if (tokenType[t] == "MULT")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "*");
+                    }
+                    else if (tokenType[t] == "DIV")
+                    {
+                        i = true;
+                        Draw_circle(level, "Op", "/");
+                    }
+                    t++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (!i)
+            {
+                factor_Draw(level);
+            }
+            else
+            {
+                factor_Draw(level + 1);
+                Token++;
+                x_axis = x_axis + 100;
+                factor_Draw(level + 1);
+            }
+        }
+
+        void factor_Draw(int level )
+        {
+            if (is_valid())
+            {
+                if ( tokenType[Token] == "OPENBRACKET")
+                {
+                    Match("OPENBRACKET");
+                    exp();
+                    Match("CLOSEDBRACKET");
+                }
+                else if (tokenType[Token] == "NUMBER")
+                {
+                    Draw_circle(level, "const", tokenValue[Token]);
+                    Token++;
+                }
+                else if (tokenType[Token] == "IDENTIFIER")
+                {
+                    Draw_circle(level, "id", tokenValue[Token]);
+                    Token++;
+                }
+                
+            }
+        }
+
+        public void Draw_circle(int level , string s , string s1 )
+        {
+            Graphics l = this.CreateGraphics();
+            Pen c = new Pen(Color.Black, 2);
+            Pen p = new Pen(Color.Blue, 2);
+
+            l.DrawEllipse(c, x_axis, y_axis + (level*70) , 50, 50);
+            l.DrawString( s , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 10 + (level * 70));
+            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 25 + (level * 70));
+            
+        }
+
+        public void Draw_REC(int level, string s)
+        {
+            Graphics l = this.CreateGraphics();
+            Pen c = new Pen(Color.Black, 2);
+            l.DrawRectangle(c, x_axis, y_axis + (level * 70), 60 , 40);
+            l.DrawString(s, new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15, y_axis + 5 + (level * 70) );
+        }
+
+
+        public void Draw_tree()
+        {
+            Token = 0;
+            stmt_seq_draw(0);
+
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void Output_TextChanged(object sender, EventArgs e)

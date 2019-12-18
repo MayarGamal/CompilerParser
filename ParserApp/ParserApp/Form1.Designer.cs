@@ -58,7 +58,7 @@
             // 
             // genBtn
             // 
-            this.genBtn.Location = new System.Drawing.Point(113, 343);
+            this.genBtn.Location = new System.Drawing.Point(59, 343);
             this.genBtn.Name = "genBtn";
             this.genBtn.Size = new System.Drawing.Size(75, 23);
             this.genBtn.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             // Output
             // 
-            this.Output.Location = new System.Drawing.Point(427, 25);
+            this.Output.Location = new System.Drawing.Point(43, 372);
             this.Output.Multiline = true;
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(213, 259);
@@ -82,9 +82,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(416, 343);
+            this.button1.Location = new System.Drawing.Point(140, 343);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(224, 23);
+            this.button1.Size = new System.Drawing.Size(116, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "RESET";
             this.button1.UseVisualStyleBackColor = true;
@@ -92,9 +92,15 @@
             // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 378);
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.CausesValidation = false;
+            this.ClientSize = new System.Drawing.Size(931, 541);
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Output);
             this.Controls.Add(this.genBtn);

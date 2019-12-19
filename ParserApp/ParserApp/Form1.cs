@@ -390,9 +390,9 @@ namespace ParserApp
                 else
                 {
                     stmt_seq();
-                    if (is_valid())
+                    if (Token+1< tokenType.Count())
                     {
-                        ERROR = true;
+                       // ERROR = true;
                     }
                 }
                

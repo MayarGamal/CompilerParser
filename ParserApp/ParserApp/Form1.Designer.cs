@@ -39,17 +39,17 @@
             // 
             // InputText
             // 
-            this.InputText.Location = new System.Drawing.Point(53, 25);
+            this.InputText.Location = new System.Drawing.Point(12, 37);
             this.InputText.Multiline = true;
             this.InputText.Name = "InputText";
-            this.InputText.Size = new System.Drawing.Size(203, 300);
+            this.InputText.Size = new System.Drawing.Size(109, 300);
             this.InputText.TabIndex = 0;
             this.InputText.TextChanged += new System.EventHandler(this.InputText_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 9);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(169, 13);
             this.label1.TabIndex = 1;
@@ -58,9 +58,9 @@
             // 
             // genBtn
             // 
-            this.genBtn.Location = new System.Drawing.Point(59, 343);
+            this.genBtn.Location = new System.Drawing.Point(15, 343);
             this.genBtn.Name = "genBtn";
-            this.genBtn.Size = new System.Drawing.Size(75, 23);
+            this.genBtn.Size = new System.Drawing.Size(103, 23);
             this.genBtn.TabIndex = 2;
             this.genBtn.Text = "Generate";
             this.genBtn.UseVisualStyleBackColor = true;
@@ -68,10 +68,10 @@
             // 
             // Output
             // 
-            this.Output.Location = new System.Drawing.Point(43, 372);
+            this.Output.Location = new System.Drawing.Point(12, 403);
             this.Output.Multiline = true;
             this.Output.Name = "Output";
-            this.Output.Size = new System.Drawing.Size(213, 259);
+            this.Output.Size = new System.Drawing.Size(106, 228);
             this.Output.TabIndex = 3;
             this.Output.TextChanged += new System.EventHandler(this.Output_TextChanged);
             // 
@@ -82,9 +82,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(140, 343);
+            this.button1.Location = new System.Drawing.Point(31, 374);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 23);
+            this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "RESET";
             this.button1.UseVisualStyleBackColor = true;

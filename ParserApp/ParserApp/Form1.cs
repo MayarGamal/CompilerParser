@@ -27,8 +27,8 @@ namespace ParserApp
         public List<string> tokenType;
         public int Token = 0 ;
         public bool ERROR = false ;
-        public int x_axis = 300;
-        public int y_axis = 20;
+        public int x_axis = 135 ;
+        public int y_axis = 35;
         public int LEVEL = 0;
 
         public void Match(string s )
@@ -278,8 +278,8 @@ namespace ParserApp
             try
             {
                 this.CreateGraphics().Clear(ActiveForm.BackColor);
-                x_axis = 300;
-                y_axis = 20;
+                x_axis = 135;
+                y_axis = 30;
 
                 //genBtn.Enabled = false; 
                 tokenType.Clear();
@@ -408,10 +408,10 @@ namespace ParserApp
                 if (tokenType[Token] == "SEMICOLON")
                 {
                     Token++;
-                    x_axis = x_axis + 100;
+                    x_axis = x_axis + 50;
                     Graphics l = this.CreateGraphics();
-                    Pen blackPen = new Pen(Color.Black, 3);
-                    l.DrawLine(blackPen, x_st + 60, y_axis + 25 + (level * 70), x_axis , y_axis + 25 + (level * 70) );
+                    Pen bluePen = new Pen(Color.Blue , 1);
+                    l.DrawLine(bluePen, x_st + 40 , y_axis + 15 + (level * 50), x_axis , y_axis + 15 + (level * 50) );
                     stmt_seq_draw(level);
                 }
             }
@@ -453,7 +453,7 @@ namespace ParserApp
 
             Draw_REC(level, "read");
             Token++;
-            l.DrawString("(" + tokenValue[Token] + ")" , new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 15, y_axis + 20 + (level*70)) ;
+            l.DrawString("(" + tokenValue[Token] + ")" , new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 5, y_axis + 20 + (level*50)) ;
             Token++;
         }
 
@@ -468,10 +468,10 @@ namespace ParserApp
         public void ASSIGN_Draw(int level)
         {
             Graphics l = this.CreateGraphics();
-            Pen c = new Pen(Color.Black, 2);
+            //Pen c = new Pen(Color.Black, 1);
 
             Draw_REC( level, "ASSIGN");
-            l.DrawString("(" + tokenValue[Token] + ")", new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 15, y_axis + 20 + (level * 70));
+            l.DrawString("(" + tokenValue[Token] + ")", new Font("Arial", 7 ), new SolidBrush(Color.Red), x_axis + 5 , y_axis + 20 + (level * 50));
             DrawLine(level, x_axis);
 
             Token++;
@@ -491,7 +491,7 @@ namespace ParserApp
             stmt_seq_draw(level + 1);
 
             Token++; // until
-            x_axis = x_axis + 100;
+            x_axis = x_axis + 50;
             DrawLine(level, x_repeat);
             exp_Draw(level+1);
         }
@@ -506,7 +506,7 @@ namespace ParserApp
             exp_Draw( level +1 );
 
             Token++;//THEN 
-            x_axis = x_axis + 100;
+            x_axis = x_axis + 50;
             DrawLine(level, x_if);
             stmt_seq_draw(level + 1);
 
@@ -515,7 +515,7 @@ namespace ParserApp
                 if (tokenType[Token] == "ELSE")
                 {
                     Token++;
-                    x_axis = x_axis + 100;
+                    x_axis = x_axis + 50;
                     DrawLine(level, x_if);
                     stmt_seq_draw(level + 1);
                 }
@@ -561,7 +561,7 @@ namespace ParserApp
                 DrawLine(level, x_exp);
                 simple_exp_Draw(level + 1);
                 Token++;
-                x_axis = x_axis + 100;
+                x_axis = x_axis + 50;
                 DrawLine(level, x_exp);
                 simple_exp_Draw(level + 1);
                 
@@ -609,7 +609,7 @@ namespace ParserApp
                 DrawLine(level, x_s);
                 term_Draw(level+1);
                 Token++;
-                x_axis = x_axis + 100;
+                x_axis = x_axis + 50;
                 DrawLine(level, x_s);
                 term_Draw(level + 1);
             }
@@ -653,7 +653,7 @@ namespace ParserApp
                 factor_Draw(level + 1);
                 DrawLine(level, x_term);
                 Token++;
-                x_axis = x_axis + 100;
+                x_axis = x_axis + 50;
                 DrawLine(level, x_term);
                 factor_Draw(level + 1);
             }
@@ -686,28 +686,28 @@ namespace ParserApp
         public void Draw_circle(int level , string s , string s1 )
         {
             Graphics l = this.CreateGraphics();
-            Pen c = new Pen(Color.Black, 2);
-            Pen p = new Pen(Color.Blue, 2);
+            Pen c = new Pen(Color.Black, 1);
+           // Pen p = new Pen(Color.Blue, 2);
 
-            l.DrawEllipse(c, x_axis, y_axis + (level*70) , 60, 50);
-            l.DrawString( s , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 10 + (level * 70));
-            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15 , y_axis + 20 + (level * 70));
+            l.DrawEllipse(c, x_axis, y_axis + (level*50) , 40, 30);
+            l.DrawString( s , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 5 , y_axis + 5 + (level * 50));
+            l.DrawString( s1  , new Font("Arial", 7), new SolidBrush(Color.Red), x_axis + 5 , y_axis + 15 + (level * 50));
             
         }
 
         public void Draw_REC(int level, string s)
         {
             Graphics l = this.CreateGraphics();
-            Pen c = new Pen(Color.Black, 2);
-            l.DrawRectangle(c, x_axis, y_axis + (level * 70), 60 , 50);
-            l.DrawString(s, new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15, y_axis + 5 + (level * 70) );
+            Pen c = new Pen(Color.Black, 1);
+            l.DrawRectangle(c, x_axis, y_axis + (level * 50), 40 , 30);
+            l.DrawString(s, new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 2, y_axis + 5 + (level * 50) );
         }
         public void DrawLine(int level , int x)
         {
 
             Graphics l = this.CreateGraphics();
-            Pen blackPen = new Pen(Color.Black, 3);
-            l.DrawLine(blackPen, x + 30 , y_axis+50+ (level*70) , x_axis + 30 , y_axis + 50 + (level * 70) + 20 );
+            Pen blackPen = new Pen(Color.Blue, 2);
+            l.DrawLine(blackPen, x + 20 , y_axis+30 + (level*50) , x_axis + 20 , y_axis + 30 + (level * 50) + 20 );
         }
 
         public void Draw_tree()

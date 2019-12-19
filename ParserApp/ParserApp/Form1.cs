@@ -260,8 +260,6 @@ namespace ParserApp
             }
         }
         
-
-
         private void InputText_TextChanged(object sender, EventArgs e)
         {
             input = InputText.Text;
@@ -283,8 +281,8 @@ namespace ParserApp
                 x_axis = 300;
                 y_axis = 20;
 
-        //genBtn.Enabled = false; 
-        tokenType.Clear();
+                //genBtn.Enabled = false; 
+                tokenType.Clear();
                 tokenValue.Clear();
                 Output.Text = String.Empty;
                 Token = 0;
@@ -372,7 +370,7 @@ namespace ParserApp
                 {
                     stmt_seq();
                 }
-               Draw_tree();
+               
 
                 if (ERROR)
                 {
@@ -381,8 +379,11 @@ namespace ParserApp
 
                     ERROR_show();
                 }
+                else
+                {
+                    Draw_tree();
 
-            
+                }
 
             }
             catch (Exception)
@@ -708,7 +709,6 @@ namespace ParserApp
             Pen blackPen = new Pen(Color.Black, 3);
             l.DrawLine(blackPen, x + 30 , y_axis+50+ (level*70) , x_axis + 30 , y_axis + 50 + (level * 70) + 20 );
         }
-
 
         public void Draw_tree()
         {

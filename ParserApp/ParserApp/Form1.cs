@@ -537,12 +537,12 @@ namespace ParserApp
                     if (tokenType[t] == "EQUAL")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "=");
+                        Draw_circle(level, "  Op", "( = )");
                     }
                     else if (tokenType[t] == "LESSTHAN")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "<");
+                        Draw_circle(level, "  Op", "( < )");
                     }
                      t++;
                 }
@@ -584,12 +584,12 @@ namespace ParserApp
                     if (tokenType[t] == "PLUS")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "+");
+                        Draw_circle(level, "  Op", "( + )");
                     }
                     else if (tokenType[t] == "MINUS")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "-");
+                        Draw_circle(level, "  Op", "( - )");
                     }
                     t++;
                 }
@@ -629,12 +629,12 @@ namespace ParserApp
                     if (tokenType[t] == "MULT")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "*");
+                        Draw_circle(level, "  Op", "( * )");
                     }
                     else if (tokenType[t] == "DIV")
                     {
                         i = true;
-                        Draw_circle(level, "Op", "/");
+                        Draw_circle(level, "  Op", " ( / )");
                     }
                     t++;
                 }
@@ -670,12 +670,12 @@ namespace ParserApp
                 }
                 else if (tokenType[Token] == "NUMBER")
                 {
-                    Draw_circle(level, "const", tokenValue[Token]);
+                    Draw_circle(level, " const", "(" + tokenValue[Token] + ")" ) ;
                     Token++;
                 }
                 else if (tokenType[Token] == "IDENTIFIER")
                 {
-                    Draw_circle(level, "id", tokenValue[Token]);
+                    Draw_circle(level, "   id", "(" + tokenValue[Token] + ")" );
                     Token++;
                 }
                 
@@ -690,7 +690,7 @@ namespace ParserApp
 
             l.DrawEllipse(c, x_axis, y_axis + (level*70) , 60, 50);
             l.DrawString( s , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 10 , y_axis + 10 + (level * 70));
-            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 20 , y_axis + 20 + (level * 70));
+            l.DrawString( s1  , new Font("Arial", 8), new SolidBrush(Color.Red), x_axis + 15 , y_axis + 20 + (level * 70));
             
         }
 

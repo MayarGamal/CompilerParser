@@ -749,5 +749,10 @@ namespace ParserApp
             genBtn.Enabled = true;
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -32,18 +32,19 @@
             this.InputText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.genBtn = new System.Windows.Forms.Button();
-            this.Output = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // InputText
             // 
-            this.InputText.Location = new System.Drawing.Point(12, 37);
+            this.InputText.Location = new System.Drawing.Point(12, 51);
             this.InputText.Multiline = true;
             this.InputText.Name = "InputText";
-            this.InputText.Size = new System.Drawing.Size(109, 300);
+            this.InputText.Size = new System.Drawing.Size(109, 358);
             this.InputText.TabIndex = 0;
             this.InputText.TextChanged += new System.EventHandler(this.InputText_TextChanged);
             // 
@@ -52,29 +53,20 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Enter(Token Value , Token Type) ";
+            this.label1.Text = "PLEASE ENTER:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // genBtn
             // 
-            this.genBtn.Location = new System.Drawing.Point(15, 343);
+            this.genBtn.Location = new System.Drawing.Point(12, 415);
             this.genBtn.Name = "genBtn";
             this.genBtn.Size = new System.Drawing.Size(103, 23);
             this.genBtn.TabIndex = 2;
             this.genBtn.Text = "Generate";
             this.genBtn.UseVisualStyleBackColor = true;
             this.genBtn.Click += new System.EventHandler(this.genBtn_Click);
-            // 
-            // Output
-            // 
-            this.Output.Location = new System.Drawing.Point(12, 403);
-            this.Output.Multiline = true;
-            this.Output.Name = "Output";
-            this.Output.Size = new System.Drawing.Size(106, 228);
-            this.Output.TabIndex = 3;
-            this.Output.TextChanged += new System.EventHandler(this.Output_TextChanged);
             // 
             // contextMenuStrip1
             // 
@@ -83,7 +75,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(31, 374);
+            this.button1.Location = new System.Drawing.Point(29, 444);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 4;
@@ -91,12 +83,31 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(119, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "TokenValue,TokenType";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(163, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "SYNTAX TREE";
+            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Menu;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBox1.Location = new System.Drawing.Point(12, 654);
+            this.textBox1.Location = new System.Drawing.Point(0, 654);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(1785, 13);
             this.textBox1.TabIndex = 5;
@@ -113,9 +124,10 @@
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1370, 693);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.Output);
             this.Controls.Add(this.genBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.InputText);
@@ -133,9 +145,10 @@
         private System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button genBtn;
-        private System.Windows.Forms.TextBox Output;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
     }
 }

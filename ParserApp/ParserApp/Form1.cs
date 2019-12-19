@@ -76,10 +76,17 @@ namespace ParserApp
             stmt();
             if ( is_valid() )
             {
-                if(tokenType[Token] == "SEMICOLON")
+              
+                if (tokenType[Token] == "SEMICOLON")
                 {
                     Match("SEMICOLON");
+                   
                     stmt_seq();
+                }
+                else
+                {
+                 //   Match("SEMICOLON");
+                    // ERROR = true;
                 }
             }
                
@@ -284,7 +291,7 @@ namespace ParserApp
                 //genBtn.Enabled = false; 
                 tokenType.Clear();
                 tokenValue.Clear();
-                Output.Text = String.Empty;
+                //Output.Text = String.Empty;
                 Token = 0;
 
                 //list of TokenValue & list of TokenType
@@ -294,6 +301,19 @@ namespace ParserApp
                     {
                         i++;
                     }
+                    else if (i < input_size + 3 && (input[i] == '\n') && (input[i + 1] == '\r') && (input[i + 2] == '\n'))
+                    {
+                        i += 3;
+                        // break;
+
+                    }
+                    else if (i < input_size + 2 && (input[i] == '\r') && (input[i + 1] == '\n'))
+                    {
+                        i += 2;
+                        //break;
+                    }
+                    
+                            
                     else
                     {
                         while ((i < input_size) && (input[i] != ',') && (input[i] != ' '))
@@ -354,13 +374,14 @@ namespace ParserApp
 
                 }
 
-                for (int i = 0; i < tokenType.Count; i++)
+                /*for (int i = 0; i < tokenType.Count; i++)
                 {
                     string type = tokenType[i];
                     string value = tokenValue[i];
 
                     Output.Text += i + "   " + value + "   " + type + "\r\n";
                 }
+                     */
 
                 if (tokenType.Count() == 0)
                 {
@@ -369,12 +390,16 @@ namespace ParserApp
                 else
                 {
                     stmt_seq();
+                    if (is_valid())
+                    {
+                        ERROR = true;
+                    }
                 }
                
 
                 if (ERROR)
                 {
-                    Output.Text = String.Empty;
+                  //  Output.Text = String.Empty;
                     this.CreateGraphics().Clear(ActiveForm.BackColor);
 
                     ERROR_show();
@@ -388,7 +413,7 @@ namespace ParserApp
             }
             catch (Exception)
             {
-                Output.Text = String.Empty;
+                //Output.Text = String.Empty;
                 this.CreateGraphics().Clear(ActiveForm.BackColor);
 
                 ERROR_show();
@@ -533,7 +558,11 @@ namespace ParserApp
             {
                 if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
                     && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
-                { 
+                {
+                    if (i)
+                    {
+                        break;
+                    }
                     //comp_op
                     if (tokenType[t] == "EQUAL")
                     {
@@ -563,7 +592,7 @@ namespace ParserApp
                 Token++;
                 x_axis = x_axis + 50;
                 DrawLine(level, x_exp);
-                simple_exp_Draw(level + 1);
+                exp_Draw(level + 1);
                 
             }
 
@@ -579,8 +608,12 @@ namespace ParserApp
             while ( !(tokenType.Count() == t) )
             {
                 if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
-                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET") && (tokenType[t] != "LESSTHAN") && (tokenType[t] != "EQUAL"))
                 {
+                    if (i)
+                    {
+                        break;
+                    }
                     //add_op
                     if (tokenType[t] == "PLUS")
                     {
@@ -608,10 +641,11 @@ namespace ParserApp
             {
                 DrawLine(level, x_s);
                 term_Draw(level+1);
+                //factor_Draw(level + 1);
                 Token++;
                 x_axis = x_axis + 50;
                 DrawLine(level, x_s);
-                term_Draw(level + 1);
+                simple_exp_Draw(level + 1);
             }
         }
 
@@ -624,8 +658,13 @@ namespace ParserApp
             while (!(tokenType.Count() == t))
             {
                if ((tokenType[t] != "THEN") && (tokenType[t] != "SEMICOLON") && (tokenType[t] != "ELSE")
-                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET"))
+                    && (tokenType[t] != "END") && (tokenType[t] != "UNTIL") && (tokenType[t] != "OPENBRACKET")&&(tokenType[t] != "PLUS") && (tokenType[t] != "MINUS") && (tokenType[t] != "LESSTHAN") && (tokenType[t] != "EQUAL"))
                 {
+                    if(i)
+                    {
+                        break;
+                    }
+                    
                     //mul_op
                     if (tokenType[t] == "MULT")
                     {
@@ -655,7 +694,7 @@ namespace ParserApp
                 Token++;
                 x_axis = x_axis + 50;
                 DrawLine(level, x_term);
-                factor_Draw(level + 1);
+                term_Draw(level + 1);
             }
         }
 
@@ -738,7 +777,7 @@ namespace ParserApp
             //ClearColor(0);
             // e.Graphics.Clear(Color.Coral);
             this.CreateGraphics().Clear(ActiveForm.BackColor);
-            Output.Text = String.Empty;
+            //Output.Text = String.Empty;
             InputText.Text = String.Empty;
             tokenType.Clear();
             tokenValue.Clear();
@@ -751,6 +790,11 @@ namespace ParserApp
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
